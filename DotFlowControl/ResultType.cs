@@ -2,7 +2,7 @@
 
 public class ResultTypeBase<T>
 {
-    public T Value { get; private set; }
+    public T Value { get; }
 
     protected ResultTypeBase(T value)
     {
@@ -10,43 +10,43 @@ public class ResultTypeBase<T>
     }
 }
 
-public class Error<ERR> : ResultTypeBase<ERR>
+public class Error<TErr> : ResultTypeBase<TErr>
 {
-    protected Error(ERR value) : base(value)
+    private Error(TErr value) : base(value)
     {
     }
 
-    public static Error<ERR> Build(ERR error)
+    public static Error<TErr> Build(TErr error)
     {
-        return new Error<ERR>(error);
+        return new Error<TErr>(error);
     }
 }
 
-public class Success<OK> : ResultTypeBase<OK>
+public class Success<TOk> : ResultTypeBase<TOk>
 {
-    protected Success(OK value) : base(value)
+    private Success(TOk value) : base(value)
     {
     }
 
-    public static Success<OK> Build(OK ok)
+    public static Success<TOk> Build(TOk ok)
     {
-        return new Success<OK>(ok);
+        return new Success<TOk>(ok);
     }
     
 }
 
-public class Result<OK, ERR>
+public class Result<TOk, TErr>
 {
-    public object Value { get; private set; }
-    private Result(){}
+    public object? Value { get; private set; }
+    protected Result(){}
 
-    public static Result<OK, ERR> Success(OK success)
+    public static Result<TOk, TErr> Success(TOk success)
     {
-        return new Result<OK, ERR>() {Value = Success<OK>.Build(success)};
+        return new Result<TOk, TErr>() {Value = Success<TOk>.Build(success)};
     }
 
-    public static Result<OK, ERR> Error(ERR error)
+    public static Result<TOk, TErr> Error(TErr error)
     {
-        return new Result<OK, ERR>(){Value = Error<ERR>.Build(error)};
+        return new Result<TOk, TErr>(){Value = Error<TErr>.Build(error)};
     }
 }
