@@ -10,7 +10,7 @@ inside of a codebase.
 This library takes heavy inspiration from F# and Rust. If I could figure
 out how to convince Microsoft to add this as a standard feature, I would.
 
-#Old Way
+# Old Way
 
 Here's an example of one way of doing error based function handling:
 
@@ -75,7 +75,7 @@ public Result<BARTYPE, string> Foo()
 }
 ```
 
-#Basic Usage Example
+# Basic Usage Example
 
 ```
 public struct Data
