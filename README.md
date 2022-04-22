@@ -120,7 +120,7 @@ public static class DataLoader
         LoadData(path)
             .Match( 
                 success : result => Console.WriteLine($"Rev : {result.Rev}),
-                error : Error(error => Console.WriteLine(error)
+                error : error => Console.WriteLine(error)
             );
     }
 }
