@@ -42,8 +42,8 @@ public class Result<TOk, TErr>
     
     #region Success and Error Evaluators
 
-    private Action<Success<TOk>> Ok = null;
-    private Action<Error<TErr>> Err = null;
+    private Action<TOk> Ok = null;
+    private Action<TErr> Err = null;
     
     #endregion
     
@@ -73,37 +73,37 @@ public class Result<TOk, TErr>
         switch (Value)
         {
             case Success<TOk> success:
-                Ok?.Invoke(success);
+                Ok?.Invoke(success.Value);
                 break;
             case Error<TErr> error:
-                Err?.Invoke(error);
+                Err?.Invoke(error.Value);
                 break;
         }
     }
     #endregion
-    public Result<TOk, TErr> Success(Action<Success<TOk>> success)
+    public Result<TOk, TErr> Success(Action<TOk> success)
     {
         Ok = success;
         return this;
     }
 
-    public Result<TOk, TErr> Error(Action<Error<TErr>> error)
+    public Result<TOk, TErr> Error(Action<TErr> error)
     {
         Err = error;
         return this;
     }
 
-    public void Match(Action<Success<TOk>> success, Action<Error<TErr>> error)
+    public void Match(Action<TOk> success, Action<TErr> error)
     {
         this.Success(success).Error(error).Match();
     }
 
-    public void Match(Action<Error<TErr>> error)
+    public void Match(Action<TErr> error)
     {
         this.Error(error).Match();
     }
 
-    public void Match(Action<Success<TOk>> success)
+    public void Match(Action<TOk> success)
     {
         this.Success(success).Match();
     }

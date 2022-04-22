@@ -75,6 +75,59 @@ public Result<BARTYPE, string> Foo()
 }
 ```
 
+#Basic Usage Example
+
+```
+public struct Data
+{
+    public int Foo;
+    public int Bar;
+    public string Rev;
+    
+    public Data(int foo, int bar, string rev)
+    {
+        Foo = foo;
+        Bar = bar;
+        Rev = rev;
+    }
+}
+
+public static class DataLoader 
+{
+    public Result<Data, string> LoadData(string filePath)
+    {
+        if(!File.Exists(filePath))
+            return Result<Data,string>.Error($"File at {filePath} doesn't exist!");
+        try
+        {
+            var lines = File.ReadLines(filePath);
+            if(!int.TryParse(lines[0], out int foo)
+                return Result<Data, string>.Error("First line is not an integer value!");
+            if(!int.TryParse(lines[1], out int bar)
+                return Result<Data, string>.Error("Second line is not an integer value!");
+            var rev = lines[2];
+            return Result<Data, string>.Success(new Data(foo, bar, rev));
+        }
+        catch(Exception er)
+        {
+            return Result<Data, string>.Error(er.Message);
+        }
+    }
+    
+    public static Result<object, string> CallingMethod()
+    {
+        var path = "hard/coded/path.txt"
+        LoadData(path)
+            .Match( 
+                success : result => Console.WriteLine($"Rev : {result.Rev}),
+                error : Error(error => Console.WriteLine(error)
+            );
+    }
+}
+
+
+```
+
 #Some Considerations
 It should be noted, that this library is just my opinion on how code should 
 look and flow. If you have simple <Yes/No> success states and uncomplicated
