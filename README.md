@@ -59,7 +59,7 @@ public ERROR_CODE Foo(out BARTYPE bar, out string message)
 The reference type could be null, it could be mutated oddly, there are just
 lots of questions that pop up in my head when I see something like this.
 
-#The DotControlFlow Way
+# The DotControlFlow Way
 
 We move the needed types to the front of the method, we no longer have
 hanging strange out parameters and as an added benefit, you should compose
@@ -120,7 +120,7 @@ public static class DataLoader
         LoadData(path)
             .Match( 
                 success : result => Console.WriteLine($"Rev : {result.Rev}),
-                error : error => Console.WriteLine(error)
+                error :     error => Console.WriteLine(error)
             );
     }
 }
