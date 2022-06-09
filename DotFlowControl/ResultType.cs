@@ -42,13 +42,14 @@ public class Result<TOk, TErr>
     
     #region Success and Error Evaluators
 
-    private Action<TOk> Ok = null;
-    private Action<TErr> Err = null;
+    private Action<TOk> _ok;
+    private Action<TErr> _err;
     
     #endregion
     
     #region Private and Protected Ctor
-    protected Result(){}
+
+    private Result(){}
     #endregion
     
     #region Success and Error Builders
@@ -68,28 +69,28 @@ public class Result<TOk, TErr>
     #region Private Evaluators
     private void Match()
     {
-        if (Ok is null && Err is null)
+        if (_ok is null && _err is null)
             throw new MatchException("To match, at least one of the functions must be defined");
         switch (Value)
         {
             case Success<TOk> success:
-                Ok?.Invoke(success.Value);
+                _ok?.Invoke(success.Value);
                 break;
             case Error<TErr> error:
-                Err?.Invoke(error.Value);
+                _err?.Invoke(error.Value);
                 break;
         }
     }
     #endregion
     public Result<TOk, TErr> Success(Action<TOk> success)
     {
-        Ok = success;
+        _ok = success;
         return this;
     }
 
     public Result<TOk, TErr> Error(Action<TErr> error)
     {
-        Err = error;
+        _err = error;
         return this;
     }
 

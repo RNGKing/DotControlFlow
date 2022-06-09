@@ -60,8 +60,8 @@ public class Tests
     public void TestMatchingSyntax()
     {
         var result = Result<int, string>.Error("FAIL");
-        result.Match(success: suc => Assert.AreEqual(suc.Value, 1),
-                    error: err => Assert.AreEqual(err.Value.ToLower(), "fail"));
+        result.Match(success: suc => Assert.AreEqual(suc, 1),
+                    error: err => Assert.AreEqual(err.ToLower(), "fail"));
     }
     /// <summary>
     /// Generates a 
